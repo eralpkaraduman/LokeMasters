@@ -1,14 +1,16 @@
 package
 {
 	import org.flixel.*;
-	[SWF(width="640", height="480", backgroundColor="#000000")]
+	import com.godstroke.LokeMasters.MenuState
+	[SWF(width="300", height="300", backgroundColor="#FFFFFF")]
 	[Frame(factoryClass="Preloader")]
 
 	public class LokeMasters extends FlxGame
 	{
 		public function LokeMasters()
 		{
-			super(320,240,MenuState,2);
+			super(300,300,MenuState,1);
+			
 			showLogo = false;
 		}
 	}
