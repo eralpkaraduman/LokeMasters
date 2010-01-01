@@ -8,7 +8,7 @@ package com.godstroke.LokeMasters
 		private var _direction:Number = RIGHT;
 		private var _draw_back:Boolean = false;
 		private var _owner:FlxSprite;
-		private var maxLength:Number = 64;
+		private var maxLength:Number = 36;
 		private var speed:Number =3;
 		
 		public static var _UP:Number =UP;
@@ -40,6 +40,9 @@ package com.godstroke.LokeMasters
 			}
 		}
 		
+		public function justHitSomething():void{
+			if(!_draw_back)_draw_back =true;
+		}
 		
 		
 		override public function update():void
@@ -88,7 +91,11 @@ package com.godstroke.LokeMasters
 					_reset();
 				}
 				// draw
+				try{
 				createGraphic(w,h,0xff000000);
+				}catch(e:Error){
+					
+				}
 			}
 			super.update();
 			// adjust to fit the hand

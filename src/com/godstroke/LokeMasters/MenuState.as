@@ -44,10 +44,14 @@ package com.godstroke.LokeMasters
 			south_wall.createGraphic(FlxG.width,1,0xFF000000);
 			walls.push(south_wall);
 			add(south_wall); 
+			
+			
 		}
 
 		override public function update():void
 		{
+			///*delete this on deploy*/FlxG.switchState(PlayState);
+			
 			super.update();
 			if(FlxG.mouse.justPressed())
 				FlxG.switchState(PlayState);

@@ -1,20 +1,24 @@
 package com.godstroke.LokeMasters
 {
+	import flash.geom.Point;
+	
 	import org.flixel.*;
 	
 
-	public class LokeMaster extends FlxSprite
+	public class Loke extends FlxSprite
 	{
 		[Embed(source="../../../data/lokeMaster.png")] private var ImgLokeMaster:Class;
 		public var _direction:Number = DOWN; //default facing direction
+		public var walking_direction:Number = 4; // UP DOWN .. 4 for none
 		private var _lokeStrike:LokeStrike = null;
 		private var idleCounter:Number = 0;
+		private var currentTarget:Point;
 		
-		public function LokeMaster(X:int=0, Y:int=0)
+		public function Loke(X:int=0, Y:int=0)
 		{
 			super(X, Y);
+			currentTarget = new Point(X,Y);
 			loadGraphic(ImgLokeMaster,true,true,16,16);
-			
 			addAnimation("idle",[2,1,2,0],1,true);
 			addAnimation("dead",[6,5,4,3],3,true);
 			addAnimation("hit",[7],0,false);
@@ -30,6 +34,8 @@ package com.godstroke.LokeMasters
 			var runSpeed:uint = 70;
 			maxVelocity.x = runSpeed;
 			maxVelocity.y = runSpeed;
+			
+			
 			
 			play("idle");
 		}
@@ -57,7 +63,7 @@ package com.godstroke.LokeMasters
 				return;
 			}
 			
-			if(FlxG.keys.A)
+			if(walking_direction == LEFT)
 			{
 				idleCounter = 0;
 				facing = LEFT;
@@ -66,7 +72,7 @@ package com.godstroke.LokeMasters
 				velocity.x = -maxVelocity.x;
 				play("walk_right")
 			}
-			else if(FlxG.keys.D)
+			else if(walking_direction == RIGHT)
 			{
 				idleCounter = 0;
 				facing = RIGHT;
@@ -75,7 +81,7 @@ package com.godstroke.LokeMasters
 				velocity.x = maxVelocity.x;
 				play("walk_right")
 			}
-			else if(FlxG.keys.W)
+			else if(walking_direction == UP)
 			{
 				idleCounter = 0;
 				//facing = UP;
@@ -85,7 +91,7 @@ package com.godstroke.LokeMasters
 				velocity.y = -maxVelocity.y;
 				play("walk_up")
 			}
-			else if(FlxG.keys.S)
+			else if(walking_direction == DOWN)
 			{
 				idleCounter = 0;
 				//facing = DOWN;
@@ -116,6 +122,12 @@ package com.godstroke.LokeMasters
 			}
 			
 			super.update();
+			
+			AI();
+		}
+		
+		private function AI():void{
+			
 		}
 		
 	}
