@@ -10,6 +10,8 @@ package com.godstroke.LokeMasters
 		private var east_wall:FlxSprite;
 		private var south_wall:FlxSprite;
 		
+		private var player:LokeMaster;
+		
 		public function PlayState()
 		{
 			FlxG.showCursor();
@@ -35,6 +37,10 @@ package com.godstroke.LokeMasters
 			south_wall.createGraphic(FlxG.width,1,0xFF000000);
 			walls.push(south_wall);
 			add(south_wall); 
+			
+			//char test
+			player =new LokeMaster(40,40);
+			add(player);
 		}
 	}
 }
