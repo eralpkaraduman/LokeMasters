@@ -6,7 +6,8 @@ package com.godstroke.LokeMasters
 	public class LokeMaster extends FlxSprite
 	{
 		[Embed(source="../../../data/lokeMaster.png")] private var ImgLokeMaster:Class;
-		public var _direction:Number;
+		public var _direction:Number = DOWN; //default facing direction
+		private var _lokeStrike:LokeStrike = null;
 		
 		public function LokeMaster(X:int=0, Y:int=0)
 		{
@@ -33,6 +34,10 @@ package com.godstroke.LokeMasters
 			maxVelocity.y = runSpeed;
 			
 			play("idle");
+		}
+		
+		public function set lokeStrike(ls:LokeStrike):void{
+			_lokeStrike = ls;
 		}
 		
 		override public function update():void
@@ -79,7 +84,7 @@ package com.godstroke.LokeMasters
 			}
 			else{
 				if(_direction == UP)play("idle_up",true);
-				if(_direction == DOWN)play("idle_up",true);
+				if(_direction == DOWN)play("idle_down",true);
 				if(_direction == LEFT)play("idle_right",true);
 				if(_direction == RIGHT)play("idle_right",true);
 				
@@ -88,6 +93,12 @@ package com.godstroke.LokeMasters
 			/* if(FlxG.keys.justPressed("X") && !velocity.y)
 			{
 			} */
+			
+			if(FlxG.keys.justPressed("SPACE")){
+				if(_lokeStrike){
+					_lokeStrike.launch();
+				}
+			}
 			
 			super.update();
 		}
