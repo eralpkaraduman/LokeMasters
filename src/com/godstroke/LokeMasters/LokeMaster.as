@@ -8,6 +8,7 @@ package com.godstroke.LokeMasters
 		[Embed(source="../../../data/lokeMaster.png")] private var ImgLokeMaster:Class;
 		public var _direction:Number = DOWN; //default facing direction
 		private var _lokeStrike:LokeStrike = null;
+		private var idleCounter:Number = 0;
 		
 		public function LokeMaster(X:int=0, Y:int=0)
 		{
@@ -26,10 +27,6 @@ package com.godstroke.LokeMasters
 			addAnimation("idle_right",[13],1,false);
 			
 			var runSpeed:uint = 70;
-			//drag.x = runSpeed*2;
-			//drag.y = runSpeed*2;
-			//acceleration.y = 420;
-			//_jumpPower = 200;
 			maxVelocity.x = runSpeed;
 			maxVelocity.y = runSpeed;
 			
@@ -38,6 +35,11 @@ package com.godstroke.LokeMasters
 		
 		public function set lokeStrike(ls:LokeStrike):void{
 			_lokeStrike = ls;
+		}
+		
+		public function blackOut():void{
+			dead = true;
+			play("dead");
 		}
 		
 		override public function update():void
@@ -49,24 +51,27 @@ package com.godstroke.LokeMasters
 			velocity.x = 0;
 			velocity.y = 0;
 			
-			if(FlxG.keys.LEFT)
+			if(FlxG.keys.A)
 			{
+				idleCounter = 0;
 				facing = LEFT;
 				_direction = LEFT;
 				//acceleration.x -= drag.x;
 				velocity.x = -maxVelocity.x;
 				play("walk_right")
 			}
-			else if(FlxG.keys.RIGHT)
+			else if(FlxG.keys.D)
 			{
+				idleCounter = 0;
 				facing = RIGHT;
 				_direction = RIGHT;
 				//acceleration.x += drag.x;
 				velocity.x = maxVelocity.x;
 				play("walk_right")
 			}
-			else if(FlxG.keys.UP)
+			else if(FlxG.keys.W)
 			{
+				idleCounter = 0;
 				//facing = UP;
 				_direction = UP;
 				//acceleration.y -= drag.y;
@@ -74,8 +79,9 @@ package com.godstroke.LokeMasters
 				velocity.y = -maxVelocity.y;
 				play("walk_up")
 			}
-			else if(FlxG.keys.DOWN)
+			else if(FlxG.keys.S)
 			{
+				idleCounter = 0;
 				//facing = DOWN;
 				_direction = DOWN;
 				//acceleration.y += drag.y;
@@ -83,18 +89,21 @@ package com.godstroke.LokeMasters
 				play("walk_down")
 			}
 			else{
-				if(_direction == UP)play("idle_up",true);
-				if(_direction == DOWN)play("idle_down",true);
-				if(_direction == LEFT)play("idle_right",true);
-				if(_direction == RIGHT)play("idle_right",true);
-				
-				//play("idle");
+				// heres a bit complex but explains itself.
+				if(_direction == UP && idleCounter>=0)play("idle_up",true);
+				if(_direction == DOWN && idleCounter>=0)play("idle_down",true);
+				if(_direction == LEFT && idleCounter>=0)play("idle_right",true);
+				if(_direction == RIGHT && idleCounter>=0)play("idle_right",true);
+				if(idleCounter>=0)idleCounter += FlxG.elapsed;
+				if(idleCounter>=3 && idleCounter>=0){
+					idleCounter = -1;
+					_direction = DOWN;
+					play("idle");
+				}
 			}
-			/* if(FlxG.keys.justPressed("X") && !velocity.y)
-			{
-			} */
 			
 			if(FlxG.keys.justPressed("SPACE")){
+				idleCounter = 0;
 				if(_lokeStrike){
 					_lokeStrike.launch();
 				}

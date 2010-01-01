@@ -101,12 +101,11 @@ package com.godstroke.LokeMasters
 			
 			x = _owner.x+adjustX;
 			y = _owner.y+adjustY;
-			
-			
 		}
 		
 		private function _reset():void{
-			createGraphic(1,1,0xffff0000);
+			//createGraphic(1,1,0xffff0000);
+			createGraphic(1,1,0x00000000);
 		}
 		
 		
