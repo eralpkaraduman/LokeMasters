@@ -10,6 +10,7 @@ package com.godstroke.LokeMasters
 		private var _owner:FlxSprite;
 		private var maxLength:Number = 36;
 		private var speed:Number =3;
+		public var damage:Number = 1;
 		
 		public static var _UP:Number =UP;
 		public static var _DOWN:Number =DOWN;

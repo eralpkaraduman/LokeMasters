@@ -14,12 +14,57 @@ package com.godstroke.LokeMasters
 		{
 			FlxG.showCursor();
 			var t:FlxText;
-			t = new FlxText(0,FlxG.height/2-10,FlxG.width,"Löke Masters");
-			t.size = 16;
+			t = new FlxText(0,FlxG.height/2-90,FlxG.width,"Löke Masters");
+			t.size = 24;
 			t.color = 0xFF000000
 			t.alignment = "center";
 			add(t);
-			t = new FlxText(FlxG.width/2-50,FlxG.height-20,100,"click to play");
+			t = new FlxText(0,t.y+35,FlxG.width,"This game is designed&programed");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			t = new FlxText(0,t.y+10,FlxG.width,"by Eralp Karaduman as thanks to people who");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			t = new FlxText(0,t.y+10,FlxG.width,"had been his friends for more than a decade.");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			t = new FlxText(0,t.y+10,FlxG.width,"We always had a passion for games, I tought it would be");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			t = new FlxText(0,t.y+10,FlxG.width,"great to carve those good memories into a game.");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			t = new FlxText(0,t.y+20,FlxG.width,"Thank you for standing aside me, for many years.");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			t = new FlxText(0,t.y+10,FlxG.width,"Baris Bayrak, Cenk Boran, Eren Ozel,");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			t = new FlxText(0,t.y+10,FlxG.width,"Emre Buyukozkan, Gokhan Derala, Harun Sarli");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			t = new FlxText(0,t.y+20,FlxG.width,"I wish you a happy new year and one more great decade.");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			t = new FlxText(0,t.y+20,FlxG.width,"This game is still in on development. Please report");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			t = new FlxText(0,t.y+10,FlxG.width,"bugs&requests to godstroke@gmail.com");
+			t.alignment = "center";
+			t.color = 0xFF000000
+			add(t);
+			
+			t = new FlxText(0,FlxG.height-20,FlxG.width,"click to play (have fun)");
 			t.alignment = "center";
 			t.color = 0xFF000000
 			add(t);

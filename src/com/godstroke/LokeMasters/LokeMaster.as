@@ -9,6 +9,10 @@ package com.godstroke.LokeMasters
 		public var _direction:Number = DOWN; //default facing direction
 		private var _lokeStrike:LokeStrike = null;
 		private var idleCounter:Number = 0;
+		public var hasPen:Boolean = false
+		private var projectileReserveCount:Number = 0;
+		
+		public var currentProjectileDamage:Number = 1; // varies from PaperItem get
 		
 		public function LokeMaster(X:int=0, Y:int=0)
 		{
@@ -41,6 +45,14 @@ package com.godstroke.LokeMasters
 		public function blackOut():void{
 			dead = true;
 			play("dead");
+		}
+		
+		public function getPapers(num:uint):void{
+			projectileReserveCount+=num;
+		}
+		
+		public function getPen():void{
+			this.hasPen = true; //player now has a pen
 		}
 		
 		override public function update():void
@@ -112,6 +124,23 @@ package com.godstroke.LokeMasters
 				idleCounter = 0;
 				if(_lokeStrike){
 					_lokeStrike.launch();
+				}
+			}
+			
+			if(FlxG.keys.justPressed("SHIFT")){
+				idleCounter = 0;
+				trace("res "+projectileReserveCount+" "+hasPen)
+				if(projectileReserveCount>0 && hasPen){
+					//var pt:PaperThrowable = new PaperThrowable(x,y);
+					var pt:PaperThrowable = FlxG.state["create_or_claim_projectile"]();
+					trace("pt "+pt);
+					pt.x = this.x + 5;
+					pt.y = this.y + 5;
+					pt.damage = currentProjectileDamage;
+					trace("pt.damage "+currentProjectileDamage);
+					pt.throwIt(_direction);
+					projectileReserveCount--;
+					if(projectileReserveCount<0)projectileReserveCount=0;
 				}
 			}
 			

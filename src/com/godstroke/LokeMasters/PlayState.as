@@ -12,7 +12,14 @@ package com.godstroke.LokeMasters
 		private var lokeStrike_player:LokeStrike;
 		// friendlies
 		private var friendLiesArray:Array =new Array();
+		// enemies
+		private var enemiesArray:Array =new Array();
+		// obstackles
 		private var obstacklesArray:Array =new Array();
+		// pickables
+		private var pickablesArray:Array =new Array();
+		// thrown things
+		private var projectilesArray:Array =new Array();
 		
 		private var west_wall:FlxSprite;
 		private var north_wall:FlxSprite;
@@ -24,7 +31,7 @@ package com.godstroke.LokeMasters
 		private var objectiveArray:Array = new Array();
 		private var canCheckObjectives:Boolean =false;
 		private var successMessage:String = "";
-		private var startingLevel:uint = 2; // must be 0 on deploy
+		private var startingLevel:uint = 0; // must be 0 on deploy
 		private var currentLevel:uint = 0;
 		private var nextLevel:uint = 0;
 		
@@ -98,11 +105,55 @@ package com.godstroke.LokeMasters
 			FlxG.collideArrays(friendLiesArray,obstacklesArray);
 			FlxG.collideArrays(walls,obstacklesArray);
 			FlxG.overlapArray(obstacklesArray,lokeStrike_player,player_hits_obstacle);
+			FlxG.overlapArray(pickablesArray,player,player_picks_item);
+			FlxG.collideArrays(projectilesArray,walls);
+			FlxG.collideArray(enemiesArray,player);
+			FlxG.overlapArrays(projectilesArray,enemiesArray,projectile_hits_enemy);
+			FlxG.overlapArray(enemiesArray,lokeStrike_player,player_hits_enemy);
+			FlxG.collideArrays(projectilesArray,obstacklesArray);
+		}
+		
+		private function projectile_hits_enemy(proj:PaperThrowable,enemy:FlxCore):void{
+			trace("proj.damage "+proj.damage);
+			enemy["hit"](proj.damage);
+			proj.justHitSomething();
+		}
+		
+		private function player_hits_enemy(ene:FlxCore,player_strike:LokeStrike):void{
+			ene["hit"](player_strike.damage);
+			player_strike["justHitSomething"]();
 		}
 		
 		private function player_hits_obstacle(obs:FlxCore,strike:FlxCore):void{
-			strike["justHitSomething"]();
 			obs["hit"]();
+			strike["justHitSomething"]();
+		}
+		
+		private function player_picks_item(item:FlxCore,player:FlxCore):void{
+			item["getItem"](player);
+		}
+		
+		public function create_or_claim_projectile():PaperThrowable{
+			var ret:PaperThrowable = null
+			for each(var pt:PaperThrowable in projectilesArray){
+				if(pt.dead && !pt.thrown){
+					ret =pt;
+				}
+			}
+			if(!ret){
+				ret = new PaperThrowable(5,5);
+				add(ret);
+				projectilesArray.push(ret)
+			}
+			return ret;
+		}
+		
+		
+		public function createPaperItem(_x:Number,_y:Number,damage:Number=1):PaperItem{
+			var pi:PaperItem =new PaperItem(_x,_y,1,damage);
+			pickablesArray.push(pi);
+			add(pi);
+			return pi;
 		}
 		
 		// LEVELS
@@ -201,11 +252,13 @@ package com.godstroke.LokeMasters
 			
 			var friend1:Loke = new Loke(table1.x,table1.y-17);
 			friend1.fixed =true;
-			friendLiesArray.push(friend1);
+			friend1._health = 9999
+			enemiesArray.push(friend1);
 			
 			var friend2:Loke = new Loke(table1.x+16,table1.y-17);
 			friend2.fixed =true;
-			friendLiesArray.push(friend2);
+			friend2._health = 9999
+			enemiesArray.push(friend2);
 			
 			// desk
 			var table2:ClassroomTable =new ClassroomTable(table1.x +64,table1.y);
@@ -215,11 +268,13 @@ package com.godstroke.LokeMasters
 			
 			var friend3:Loke = new Loke(table2.x,table2.y-17);
 			friend3.fixed =true;
-			friendLiesArray.push(friend3);
+			friend3._health = 9999
+			enemiesArray.push(friend3);
 			
 			var friend4:Loke = new Loke(table2.x+16,table2.y-17);
 			friend4.fixed =true;
-			friendLiesArray.push(friend4);
+			friend4._health = 9999
+			enemiesArray.push(friend4);
 			
 			//desk
 			var table3:ClassroomTable =new ClassroomTable(table2.x +64,table2.y);
@@ -229,11 +284,13 @@ package com.godstroke.LokeMasters
 			
 			var friend5:Loke = new Loke(table3.x,table3.y-17);
 			friend5.fixed =true;
-			friendLiesArray.push(friend5);
+			friend5._health = 9999
+			enemiesArray.push(friend5);
 			
 			var friend6:Loke = new Loke(table3.x+16,table3.y-17);
+			friend6._health = 9999
 			friend6.fixed =true;
-			friendLiesArray.push(friend6);
+			enemiesArray.push(friend6);
 			
 			// desk
 			var table4:ClassroomTable =new ClassroomTable(table1.x,table1.y+60);
@@ -243,11 +300,13 @@ package com.godstroke.LokeMasters
 			
 			var friend7:Loke = new Loke(table4.x,table4.y-17);
 			friend7.fixed =true;
-			friendLiesArray.push(friend7);
+			friend7._health = 9999
+			enemiesArray.push(friend7);
 			
 			var friend8:Loke = new Loke(table4.x+16,table4.y-17);
 			friend8.fixed =true;
-			friendLiesArray.push(friend8);
+			friend8._health = 9999
+			enemiesArray.push(friend8);
 			
 			// desk
 			var table5:ClassroomTable =new ClassroomTable(table4.x +64,table4.y);
@@ -257,11 +316,13 @@ package com.godstroke.LokeMasters
 			
 			var friend9:Loke = new Loke(table5.x,table5.y-17);
 			friend9.fixed =true;
-			friendLiesArray.push(friend9);
+			friend9._health = 9999
+			enemiesArray.push(friend9);
 			
 			var friend10:Loke = new Loke(table5.x+16,table5.y-17);
 			friend10.fixed =true;
-			friendLiesArray.push(friend10);
+			friend10._health = 9999
+			enemiesArray.push(friend10);
 			
 			// desk
 			var table6:ClassroomTable =new ClassroomTable(table5.x +64,table5.y);
@@ -271,44 +332,70 @@ package com.godstroke.LokeMasters
 			
 			var friend11:Loke = new Loke(table6.x,table6.y-17);
 			friend11.fixed =true;
-			friendLiesArray.push(friend11);
+			friend11._health = 9999
+			enemiesArray.push(friend11);
 			
 			var friend12:Loke = new Loke(table6.x+16,table6.y-17);
 			friend12.fixed =true;
-			friendLiesArray.push(friend12);
+			friend12._health = 9999
+			enemiesArray.push(friend12);
+			// statics done
 			
-			/* var friend7:Loke = new Loke(table1.x,table1.y-17);
-			friend7.fixed =true;
-			friendLiesArray.push(friend7);
+			//required items
+			var paper:PaperItem =new PaperItem(100,100,15,10030);
+			pickablesArray.push(paper);
+			var pen:Pen = new Pen(260,260);
+			pickablesArray.push(pen);
 			
-			var friend8:Loke = new Loke(table1.x+16,table1.y-17);
-			friend8.fixed =true;
-			friendLiesArray.push(friend8); */
-			
-			
+			// adds
 			add(friend1);add(friend2);add(friend3);
 			add(friend4);add(friend5);add(friend6);
 			add(friend7);add(friend8);add(friend9);
 			add(friend10);add(friend11);add(friend12);
+			add(paper);
+			add(pen);
 			
 			add(player);
 			add(lokeStrike_player);
 			
-			
-			
 			levelObjective.text = "May 14th of 2002, you are at high school's classroom.\nEmre writes 'Aspersion!' on many small bits of paper,\nthan throws these to other kids, saying:\nI CASTED ASPERSION ON YOU!\n\nFind a pen, a paper.\nThan cast aspertion on all kids by pressing shift key.";
-			successMessage = "You are a bad person!"
-			nextLevel = 2;
+			successMessage = "Shame on you! You are a bad person!"
+			nextLevel = 3;
 			objectiveArray.push(
 				function():Boolean
 				{
-					/* for each(var can:TrashCan in obstacklesArray){
-						if(!can.dead)return false;
-					} */
+					for each(var en:Loke in enemiesArray){
+						if(!en.dead)return false;
+					} 
 					return true;
 				}
 			)
-			canCheckObjectives = false;
+			canCheckObjectives = true;
+		}
+		
+		// LEVELS
+		//////////////////////
+		///////  1  //////////
+		//////////////////////
+		private function level3():void{
+			player =new LokeMaster(FlxG.width/2-6,FlxG.height/2-6);
+			add(player);
+			
+			//lokeStrike_player =new LokeStrike(player);
+			//add(lokeStrike_player);
+			setTimeout(function():void{player.blackOut()},4000);
+			
+			levelObjective.text = "ERROR 5734: BAD MEMORY SECTOR.\nMost likely this is the last of the readable records.\nPlease check back later.";
+			successMessage = "You will be redirected in few minutes.";
+			nextLevel = 0;
+			objectiveArray.push(
+				function():Boolean
+				{
+					if(player.dead)return true;
+					else return false; 
+				}
+			)
+			canCheckObjectives = true;
 		}
 		
 		// *
@@ -330,6 +417,12 @@ package com.godstroke.LokeMasters
 			obstacklesArray =[];
 			for each(f in friendLiesArray){f.dead=true; f.destroy(); f.visible=false}
 			friendLiesArray =[];
+			for each(f in enemiesArray){f.dead=true; f.destroy(); f.visible=false}
+			enemiesArray =[];
+			for each(f in projectilesArray){f.dead=true; f.destroy(); f.visible=false}
+			projectilesArray =[];
+			for each(f in pickablesArray){f.dead=true; f.destroy(); f.visible=false}
+			pickablesArray =[];
 			
 			canCheckObjectives = false;
 		}

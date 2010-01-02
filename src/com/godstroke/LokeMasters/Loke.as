@@ -13,6 +13,9 @@ package com.godstroke.LokeMasters
 		private var _lokeStrike:LokeStrike = null;
 		private var idleCounter:Number = 0;
 		private var currentTarget:Point;
+		public var _health:Number = 5;
+		
+		public var currentProjectileDamage:Number = 1; // varies from PaperItem get
 		
 		public function Loke(X:int=0, Y:int=0)
 		{
@@ -35,8 +38,6 @@ package com.godstroke.LokeMasters
 			maxVelocity.x = runSpeed;
 			maxVelocity.y = runSpeed;
 			
-			
-			
 			play("idle");
 		}
 		
@@ -47,6 +48,16 @@ package com.godstroke.LokeMasters
 		public function blackOut():void{
 			dead = true;
 			play("dead");
+		}
+		
+		public function hit(damage:Number):void{
+			trace("ene hit by "+damage);
+			_health-=damage;
+			if(_health<=0){
+				trace("die son of a BEACH !")
+				blackOut();
+				health = 0;
+			}
 		}
 		
 		override public function update():void
