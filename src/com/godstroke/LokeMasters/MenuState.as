@@ -39,7 +39,7 @@ package com.godstroke.LokeMasters
 			t.alignment = "center";
 			t.color = 0xFF000000
 			add(t);
-			t = new FlxText(0,t.y+20,FlxG.width,"Thank you for standing aside me, for many years.");
+			t = new FlxText(0,t.y+20,FlxG.width,"Thank you for standing beside me, for many years.");
 			t.alignment = "center";
 			t.color = 0xFF000000
 			add(t);

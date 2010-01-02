@@ -110,6 +110,7 @@ package com.godstroke.LokeMasters
 			FlxG.collideArray(enemiesArray,player);
 			FlxG.overlapArrays(projectilesArray,enemiesArray,projectile_hits_enemy);
 			FlxG.overlapArray(enemiesArray,lokeStrike_player,player_hits_enemy);
+			FlxG.overlapArray(friendLiesArray,lokeStrike_player,player_hits_friend);
 			FlxG.collideArrays(projectilesArray,obstacklesArray);
 		}
 		
@@ -117,6 +118,10 @@ package com.godstroke.LokeMasters
 			trace("proj.damage "+proj.damage);
 			enemy["hit"](proj.damage);
 			proj.justHitSomething();
+		}
+		
+		private function player_hits_friend(ene:FlxCore,player_strike:LokeStrike):void{
+			player_strike["justHitSomething"]();
 		}
 		
 		private function player_hits_enemy(ene:FlxCore,player_strike:LokeStrike):void{
@@ -220,8 +225,6 @@ package com.godstroke.LokeMasters
 			add(trashCan5);
 			add(trashCan6);
 			add(lokeStrike_player);
-			
-			friendLiesArray.push();
 			
 			levelObjective.text = "We have just traveled in time. Now is,\nSeptember 21th of 1995. Eralp and Eren are playing\nat the schoolyard, waiting for car to take them home.\n\nPress Space key to hit trash cans with your tie.\nBreak all of them.";
 			successMessage = "Good job! Hold tight."
