@@ -358,7 +358,7 @@ package com.godstroke.LokeMasters
 			add(player);
 			add(lokeStrike_player);
 			
-			levelObjective.text = "May 14th of 2002, you are at high school's classroom.\nEmre writes 'Aspersion!' on many small bits of paper,\nthan throws these to other kids, saying:\nI CASTED ASPERSION ON YOU!\n\nFind a pen, a paper.\nThan cast aspertion on all kids by pressing shift key.";
+			levelObjective.text = "May 14th of 2002, you are at high school's classroom.\nEmre writes 'Aspersion!' on many small bits of paper,\nthan throws these to other kids, saying:\nI CASTED ASPERSION ON YOU!\n\nFind a pen, a paper.\nThan cast aspersion on all kids by pressing shift key.";
 			successMessage = "Shame on you! You are a bad person!"
 			nextLevel = 3;
 			objectiveArray.push(
