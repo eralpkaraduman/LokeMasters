@@ -12,9 +12,10 @@ package com.godstroke.LokeMasters
 		public var walking_direction:Number = 4; // UP DOWN .. 4 for none
 		private var _lokeStrike:LokeStrike = null;
 		private var idleCounter:Number = 0;
+		private var AIcounter:Number = 0;
 		private var currentTarget:Point;
 		public var _health:Number = 5;
-		public var AISchema:String =null;
+		public var _AISchema:String =null;
 		
 		public var currentProjectileDamage:Number = 1; // varies from PaperItem get
 		
@@ -43,6 +44,11 @@ package com.godstroke.LokeMasters
 			maxVelocity.y = runSpeed;
 			
 			play("idle");
+		}
+		
+		public function set AISchema(schema:String):void{
+			AIcounter = 0;
+			_AISchema = schema;
 		}
 		
 		public function set lokeStrike(ls:LokeStrike):void{
@@ -137,7 +143,7 @@ package com.godstroke.LokeMasters
 			}
 			super.update();
 			// apply AI if any set.
-			if(AISchema)this[AISchema]();
+			if(_AISchema)this[_AISchema]();
 		}
 		
 		/*
@@ -147,7 +153,18 @@ package com.godstroke.LokeMasters
 		*/
 		public static var wanderingAI:String = "wanderingAI";
 		private function wanderingAI():void{
-			walking_direction = DOWN;
+			AIcounter+=FlxG.elapsed;
+			
+			if(AIcounter>0.47){
+				if(Math.random()<0.33)walking_direction = Math.round(Math.random()*3);
+				else if(Math.random()<0.44)walking_direction = NaN;
+				//else nothing
+				AIcounter=0;
+			}
+			if(this.y<20)walking_direction = DOWN;
+			if(this.y>FlxG.height-20-16)walking_direction = UP;
+			if(this.x>FlxG.width-20-16)walking_direction = LEFT;
+			if(this.x<20)walking_direction = RIGHT;
 		}
 		
 	}

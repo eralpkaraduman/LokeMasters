@@ -6,6 +6,8 @@ package com.godstroke.LokeMasters
 
 	public class PlayState extends FlxState
 	{
+		[Embed(source="../../../data/blackPixel.png")] private var blackPixel:Class;
+		
 		private var walls:Array = new Array();
 		// player
 		private var player:LokeMaster;
@@ -21,17 +23,18 @@ package com.godstroke.LokeMasters
 		// thrown things
 		private var projectilesArray:Array =new Array();
 		
-		private var west_wall:FlxSprite;
-		private var north_wall:FlxSprite;
-		private var east_wall:FlxSprite;
-		private var south_wall:FlxSprite;
+		private var west_wall:FlxBlock;
+		private var north_wall:FlxBlock;
+		//private var east_wall:FlxSprite;
+		private var east_wall:FlxBlock;
+		private var south_wall:FlxBlock;
 		
 		private var levelObjective:FlxText;
 		
 		private var objectiveArray:Array = new Array();
 		private var canCheckObjectives:Boolean =false;
 		private var successMessage:String = "";
-		private var startingLevel:uint = 4; // must be 0 on deploy
+		private var startingLevel:uint = 0; // must be 0 on deploy
 		private var currentLevel:uint = 0;
 		private var nextLevel:uint = 0;
 		
@@ -41,26 +44,29 @@ package com.godstroke.LokeMasters
 			FlxG.showCursor();
 			
 			//walls
-			west_wall = new FlxSprite(0,0);
-			west_wall.createGraphic(1,FlxG.height,0xFF000000);
+			west_wall = new FlxBlock(0,0,1,FlxG.height);
+			//west_wall.createGraphic(1,FlxG.height,0xFF000000);
+			west_wall.loadGraphic(blackPixel,0);
 			west_wall.fixed = true;
 			walls.push(west_wall);
 			add(west_wall);
 			
-			north_wall = new FlxSprite(0,0);
-			north_wall.createGraphic(FlxG.width,1,0xFF000000);
+			north_wall = new FlxBlock(0,0,FlxG.width,1);
+			//north_wall.createGraphic(FlxG.width,1,0xFF000000);
+			north_wall.loadGraphic(blackPixel,0);
 			walls.push(north_wall);
 			north_wall.fixed = true;
 			add(north_wall); 
 			
-			east_wall = new FlxSprite(FlxG.width-41,0);
-			east_wall.createGraphic(1,FlxG.height,0xFF000000);
+			east_wall = new FlxBlock(FlxG.width-1,0,1,FlxG.height);
+			east_wall.loadGraphic(blackPixel,0);
 			east_wall.fixed = true;
 			walls.push(east_wall);
 			add(east_wall); 
 			
-			south_wall = new FlxSprite(0,FlxG.height-1);
-			south_wall.createGraphic(FlxG.width,1,0xFF000000);
+			south_wall = new FlxBlock(0,FlxG.height-1,FlxG.width,1);
+			//south_wall.createGraphic(FlxG.width,1,0xFF000000);
+			south_wall.loadGraphic(blackPixel,0);
 			south_wall.fixed = true;
 			walls.push(south_wall);
 			add(south_wall); 
@@ -99,9 +105,12 @@ package com.godstroke.LokeMasters
 				passLevel(nextLevel);
 			}
 			
-			FlxG.collideArray(walls,player);
 			FlxG.collideArray(friendLiesArray,player);
+			FlxG.collideArrays(friendLiesArray,friendLiesArray);
 			FlxG.collideArrays(friendLiesArray,walls);
+			
+			FlxG.collideArray(walls,player);
+			
 			FlxG.collideArray(obstacklesArray,player);
 			FlxG.collideArrays(friendLiesArray,obstacklesArray);
 			FlxG.collideArrays(walls,obstacklesArray);
@@ -388,8 +397,8 @@ package com.godstroke.LokeMasters
 			setTimeout(function():void{player.blackOut()},4000);
 			
 			levelObjective.text = "ERROR 5734: BAD MEMORY SECTOR.\nMost likely this is the last of the readable records.\nPlease check back later.";
-			successMessage = "You will be redirected in few minutes.";
-			nextLevel = 4;
+			successMessage = "You will be redirected after few seconds.";
+			nextLevel = 0;
 			objectiveArray.push(
 				function():Boolean
 				{
@@ -406,19 +415,33 @@ package com.godstroke.LokeMasters
 		private function level4():void{
 			player =new LokeMaster(FlxG.width/2-6,FlxG.height/2-6);
 			add(player);
-			//player.fixed =true;
-			var loke:Loke =new Loke(60,60);
-			//loke.AISchema = Loke.wanderingAI;
-			//loke.fixed = true;
+			
+			var loke:Loke =new Loke(60,FlxG.height/2-6);
+			loke.AISchema = Loke.wanderingAI;
 			add(loke);
 			friendLiesArray.push(loke);
+			
+			var loke2:Loke =new Loke(220,FlxG.height/2-6);
+			loke2.AISchema = Loke.wanderingAI;
+			add(loke2);
+			friendLiesArray.push(loke2);
+			
+			var loke3:Loke =new Loke(FlxG.width/2-6,70);
+			loke3.AISchema = Loke.wanderingAI;
+			add(loke3);
+			friendLiesArray.push(loke3);
+			
+			var loke4:Loke =new Loke(FlxG.width/2-6,230);
+			loke4.AISchema = Loke.wanderingAI;
+			add(loke4);
+			friendLiesArray.push(loke4);
 			
 			//lokeStrike_player =new LokeStrike(player);
 			//add(lokeStrike_player);
 			//setTimeout(function():void{player.blackOut()},4000);
 			
-			levelObjective.text = "Atiyem Kaç. ıIğĞüÜiİşŞöÖçÇ";
-			successMessage = "You will be redirected in few minutes.";
+			levelObjective.text = "Random Wandering AI test level.";
+			successMessage = "There are no success conditions.";
 			nextLevel = 0;
 			objectiveArray.push(
 				function():Boolean

@@ -101,10 +101,10 @@ package com.godstroke.LokeMasters
 			super.update();
 			// adjust to fit the hand
 			switch(_owner["_direction"]){
-				case UP:adjustY+=5;adjustX+=12;break;
-				case DOWN:adjustY+=10;adjustX+=3;break;
-				case LEFT:adjustY+=6;adjustX+=5;break;
-				case RIGHT:adjustY+=6;adjustX+=10;break;
+				case UP:adjustY+=5;adjustX+=9;break;
+				case DOWN:adjustY+=10;adjustX-=1;break;
+				case LEFT:adjustY+=6;adjustX+=1;break;
+				case RIGHT:adjustY+=6;adjustX+=6;break;
 			}
 			
 			x = _owner.x+adjustX;

@@ -15,6 +15,7 @@ package com.godstroke.LokeMasters
 			bgColor = 0xFFFFFFFF;
 			FlxG.showCursor();
 			var t:FlxText;
+			
 			t = new FlxText(0,FlxG.height/2-90,FlxG.width,"Löke Masters");
 			t.size = 24;
 			t.color = 0xFF000000
@@ -66,6 +67,7 @@ package com.godstroke.LokeMasters
 			add(t);
 			
 			t = new FlxText(0,FlxG.height-20,FlxG.width,"click to play (have fun)");
+			//t = new FlxText(0,FlxG.height-20,FlxG.width,"click to play (WASD keys to move)");
 			t.alignment = "center";
 			t.color = 0xFF000000
 			add(t);
