@@ -31,12 +31,13 @@ package com.godstroke.LokeMasters
 		private var objectiveArray:Array = new Array();
 		private var canCheckObjectives:Boolean =false;
 		private var successMessage:String = "";
-		private var startingLevel:uint = 0; // must be 0 on deploy
+		private var startingLevel:uint = 4; // must be 0 on deploy
 		private var currentLevel:uint = 0;
 		private var nextLevel:uint = 0;
 		
 		public function PlayState()
 		{
+			bgColor = 0xFFFFFFFF;
 			FlxG.showCursor();
 			
 			//walls
@@ -52,7 +53,7 @@ package com.godstroke.LokeMasters
 			north_wall.fixed = true;
 			add(north_wall); 
 			
-			east_wall = new FlxSprite(FlxG.width-1,0);
+			east_wall = new FlxSprite(FlxG.width-41,0);
 			east_wall.createGraphic(1,FlxG.height,0xFF000000);
 			east_wall.fixed = true;
 			walls.push(east_wall);
@@ -375,10 +376,8 @@ package com.godstroke.LokeMasters
 			)
 			canCheckObjectives = true;
 		}
-		
-		// LEVELS
 		//////////////////////
-		///////  1  //////////
+		///////  4  //////////
 		//////////////////////
 		private function level3():void{
 			player =new LokeMaster(FlxG.width/2-6,FlxG.height/2-6);
@@ -390,7 +389,7 @@ package com.godstroke.LokeMasters
 			
 			levelObjective.text = "ERROR 5734: BAD MEMORY SECTOR.\nMost likely this is the last of the readable records.\nPlease check back later.";
 			successMessage = "You will be redirected in few minutes.";
-			nextLevel = 0;
+			nextLevel = 4;
 			objectiveArray.push(
 				function():Boolean
 				{
@@ -399,6 +398,36 @@ package com.godstroke.LokeMasters
 				}
 			)
 			canCheckObjectives = true;
+		}
+		
+		//////////////////////
+		///////  5  //////////
+		//////////////////////
+		private function level4():void{
+			player =new LokeMaster(FlxG.width/2-6,FlxG.height/2-6);
+			add(player);
+			//player.fixed =true;
+			var loke:Loke =new Loke(60,60);
+			//loke.AISchema = Loke.wanderingAI;
+			//loke.fixed = true;
+			add(loke);
+			friendLiesArray.push(loke);
+			
+			//lokeStrike_player =new LokeStrike(player);
+			//add(lokeStrike_player);
+			//setTimeout(function():void{player.blackOut()},4000);
+			
+			levelObjective.text = "Atiyem Kaç. ıIğĞüÜiİşŞöÖçÇ";
+			successMessage = "You will be redirected in few minutes.";
+			nextLevel = 0;
+			objectiveArray.push(
+				function():Boolean
+				{
+					if(player.dead)return true;
+					else return false; 
+				}
+			)
+			canCheckObjectives = false;
 		}
 		
 		// *

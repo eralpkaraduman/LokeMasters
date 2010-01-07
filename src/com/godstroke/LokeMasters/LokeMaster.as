@@ -18,6 +18,8 @@ package com.godstroke.LokeMasters
 		{
 			super(X, Y);
 			loadGraphic(ImgLokeMaster,true,true,16,16);
+			width = 8;
+			offset.x = 4;
 			
 			addAnimation("idle",[2,1,2,0],1,true);
 			addAnimation("dead",[6,5,4,3],3,true);

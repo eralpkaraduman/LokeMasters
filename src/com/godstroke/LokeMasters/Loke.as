@@ -14,6 +14,7 @@ package com.godstroke.LokeMasters
 		private var idleCounter:Number = 0;
 		private var currentTarget:Point;
 		public var _health:Number = 5;
+		public var AISchema:String =null;
 		
 		public var currentProjectileDamage:Number = 1; // varies from PaperItem get
 		
@@ -22,6 +23,9 @@ package com.godstroke.LokeMasters
 			super(X, Y);
 			currentTarget = new Point(X,Y);
 			loadGraphic(ImgLokeMaster,true,true,16,16);
+			width = 8;
+			offset.x = 4;
+			
 			addAnimation("idle",[2,1,2,0],1,true);
 			addAnimation("dead",[6,5,4,3],3,true);
 			addAnimation("hit",[7],0,false);
@@ -112,7 +116,7 @@ package com.godstroke.LokeMasters
 				play("walk_down")
 			}
 			else{
-				// heres a bit complex but explains itself.
+				// here's a bit complex but explains itself.
 				if(_direction == UP && idleCounter>=0)play("idle_up",true);
 				if(_direction == DOWN && idleCounter>=0)play("idle_down",true);
 				if(_direction == LEFT && idleCounter>=0)play("idle_right",true);
@@ -131,14 +135,19 @@ package com.godstroke.LokeMasters
 					_lokeStrike.launch();
 				}
 			}
-			
 			super.update();
-			
-			AI();
+			// apply AI if any set.
+			if(AISchema)this[AISchema]();
 		}
 		
-		private function AI():void{
-			
+		/*
+		////////////////////////////////////////
+		//// Artificial Inteligence schemas ////
+		////////////////////////////////////////
+		*/
+		public static var wanderingAI:String = "wanderingAI";
+		private function wanderingAI():void{
+			walking_direction = DOWN;
 		}
 		
 	}

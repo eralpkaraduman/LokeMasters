@@ -12,6 +12,7 @@ package com.godstroke.LokeMasters
 		
 		public function MenuState()
 		{
+			bgColor = 0xFFFFFFFF;
 			FlxG.showCursor();
 			var t:FlxText;
 			t = new FlxText(0,FlxG.height/2-90,FlxG.width,"Löke Masters");
